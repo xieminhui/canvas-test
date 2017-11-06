@@ -1,3 +1,6 @@
+/*
+* 用于背景音乐和图片加载，同时显示进度条
+* */
 var Loading = function(){
 	var loadingComplete = false;
 	var dateCount = null;
@@ -22,7 +25,7 @@ var Loading = function(){
 			ctx.fillStyle = "#FFF";
 
 			ctx.save();
-			ctx.translate(this.x , this.y);
+			ctx.translate(this.x , this.y);//移动坐标原点
 			ctx.rotate(this.angle);
 			ctx.fillRect(-this.elew/2 , -this.r+this.elew/2 , this.elew , this.elew);
 			ctx.fillRect(-this.elew/2 , this.r-this.elew/2, this.elew , this.elew);
@@ -44,7 +47,7 @@ var Loading = function(){
 			function li(){
 				if(datas[dataIndex].indexOf("mp3")>=0){
 					var audio = document.createElement("audio");
-					console.log('ss')
+					//console.log('ss')
 					
 					audio.preload = "auto";
 					audio.src = datas[dataIndex];
@@ -63,7 +66,7 @@ var Loading = function(){
 							_this.percent = parseInt(dataIndex/datas.length*100);
 							li.call(_this);
 						}
-						console.log(document.body.innerHTML);
+						//console.log(document.body.innerHTML);
 						document.body.appendChild(audio);
 					}
 				}else {
@@ -72,7 +75,7 @@ var Loading = function(){
 						if(dataIndex===datas.length){
 							_this.percent = 100;
 						} else {
-							_this.percent = parseInt(dataIndex/datas.length*100);
+							_this.percent = parseInt(dataIndex/datas.length*100);//这里改变loading进度条
 							li.call(_this);
 						}
 					})

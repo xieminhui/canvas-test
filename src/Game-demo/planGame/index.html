@@ -84,17 +84,17 @@
 			switch(event.keyCode){
                    //case 88:myplan.fire = true;
                     //break;
-				case 90:myplan.rotateLeft=true;
+				case 90:myplan.rotateLeft=true;//Z键，左旋转
 				break;
-				case 67:myplan.rotateRight=true;
+				case 67:myplan.rotateRight=true;//C键，有旋转
 				break;
-				case 37:myplan.toLeft = true;
+				case 37:myplan.toLeft = true;//左移动
 				break;
-				case 38:myplan.toTop = true;
+				case 38:myplan.toTop = true;//上移动
 				break;
-				case 39:myplan.toRight = true;
+				case 39:myplan.toRight = true;//右移动
 				break;
-				case 40:myplan.toBottom = true;
+				case 40:myplan.toBottom = true;//下移动
 				break;
 			}
 		}
@@ -103,21 +103,21 @@
 			switch(event.keyCode){
                     //case 88:myplan.fire = false;
                     //break;
-				case 90:myplan.rotateLeft=false;
+				case 90:myplan.rotateLeft=false;//Z键，左旋转
 				break;
-				case 67:myplan.rotateRight=false;
+				case 67:myplan.rotateRight=false;//C键，有旋转
 				break;
-				case 37:myplan.toLeft = false;
+				case 37:myplan.toLeft = false;//左移动
 				break;
-				case 38:myplan.toTop = false;
+				case 38:myplan.toTop = false;//上移动
 				break;
-				case 39:myplan.toRight = false;
+				case 39:myplan.toRight = false;//右移动
 				break;
-				case 40:myplan.toBottom = false;
+				case 40:myplan.toBottom = false;//下移动
 				break;
 			}
 		}
-
+		/*用于无敌状态*/
 		document.getElementById("god").onclick = function(){
 			if(myplan){
 				myplan.god = true;
@@ -181,6 +181,7 @@
 			},
 
 			addElement:function(){
+                //游戏背景的发光的小点
 				for(var i=0;i<50;i++){
 					var x = Math.random()*canvas.width;
 					var y = Math.random()*2*canvas.height - canvas.height;
@@ -189,7 +190,7 @@
 					star.left = x;
 					sprites.push(star);
 				}
-
+                //敌机
 				for(var i=0;i<badPlanNum;i++){
 					var x = Math.random()*(canvas.width-2*planSize().w)+planSize().w;
 					var y = Math.random()*canvas.height - canvas.height;
@@ -198,13 +199,13 @@
 					badPlan.left = x;
 					sprites.push(badPlan);
 				}
-
+                //子弹
 				for(var i=0;i<400;i++){
 					var missle = new Sprite("missle" , misslePainter , missleBehavior);
 					missle.visible = false;
 					missles.push(missle);
 				}
-
+                //敌机爆炸
 				for(var i=0;i<badPlanNum;i++){
 					var img = new Image();
 					img.src = "image/explosion.png";
@@ -214,20 +215,20 @@
 					boom.visible = false;
 					booms.push(boom);
 				}
-
+                //吃道具
 				eatfood = new Sprite("food" , foodPainter , foodBehavior);
 				eatfood.left = Math.random()*canvas.width-60+30;
 				eatfood.top = -30;
 				eatfood.visible = false;
 				sprites.push(eatfood)
-
+                //我方战机
 				img.src = "image/ship.png"
 				myplan = new Sprite("plan" , new controllSpriteSheetPainter(planCells , img) , planBehavior);
 				myplan.left = canvas.width/2;
 				myplan.top = canvas.height-(planSize().h/2+10);
 				sprites.push(myplan);
 			},
-            
+            //战机重生
             myplanReborn:function(myplan){
 					setTimeout(function(){
 						myplan.visible = true;
@@ -250,6 +251,7 @@
 				if(this.loading.getComplete()){
 					ctx.clearRect(0,0,canvas.width,canvas.height);
 				}
+				//碰撞检测，
 				missles.foreach(function(){
 					var missle = this;
 					sprites.foreach(function(){
